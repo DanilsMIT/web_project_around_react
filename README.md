@@ -1,4 +1,4 @@
-# Around the U.S. - React Migration (TripleTen Sprint 14)
+# Around the U.S. - React + Vite Migration (TripleTen Sprint 14)
 
 ## 📌 Descripción del Proyecto
 
