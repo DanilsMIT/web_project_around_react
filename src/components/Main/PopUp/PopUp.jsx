@@ -12,7 +12,7 @@ export default function PopUp(propiedades) {
   return (
     <>
       <div className="popup">
-        <div className={popup_content_class}>
+        <div className={popupContentClass}>
           <button
             aria-label="Cerrar ventana emergente"
             className="popup__close"

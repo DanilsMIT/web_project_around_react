@@ -1,4 +1,3 @@
-import { useState } from "react";
 //components
 import Header from "./Header/Header.jsx";
 import Main from "./Main/Main.jsx";

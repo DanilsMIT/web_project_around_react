@@ -1,6 +1,4 @@
 import { useState } from "react";
-//images
-import Avatar from "../../images/avatar.jpg";
 
 ///Componentes
 import PopUp from "./PopUp/PopUp.jsx";
@@ -10,6 +8,8 @@ import EditProfileForm from "./PopUp/Forms/EditProfile.jsx";
 import ChangeAvatar from "./PopUp/Forms/ChangeAvatar.jsx";
 //Objetos
 import Card from "./Components/Card.jsx";
+//images
+import Avatar from "../../images/avatar.jpg";
 
 //constantes
 const cards = [
