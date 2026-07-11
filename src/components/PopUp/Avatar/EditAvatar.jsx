@@ -1,4 +1,4 @@
-export default function ChangeAvatarForm() {
+export default function EditAvatar() {
   return (
     <form className="popup__form" id="change-avatar-form">
       <input

@@ -1,5 +1,5 @@
-import PopUpImage from "../PopUp/Preview/PopUpImage.jsx";
-import DeleteConfirmation from "../PopUp/Confirmation/DeleteConfirmation.jsx";
+import PopUpImage from "../PopUp/ImagePopup/ImagePopup.jsx";
+import DeleteConfirmation from "../PopUp/RemoveCard/RemoveCard.jsx";
 
 export default function Card({ CardData, handleOpenPopUp }) {
   //Atributos

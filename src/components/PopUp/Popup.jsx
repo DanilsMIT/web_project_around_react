@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export default function PopUp(propiedades) {
   //atributos
   const { onClose, title, children } = propiedades;
@@ -9,10 +11,22 @@ export default function PopUp(propiedades) {
     popupContentClass += " popup__content_content_image";
   }
 
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    document.addEventListener("keydown", handleEsc);
+    return () => {
+      document.removeEventListener("keydown", handleEsc);
+    };
+  }, [onClose]);
+
   return (
     <>
-      <div className="popup">
-        <div className={popupContentClass}>
+      <div className="popup" onClick={onClose}>
+        <div className={popupContentClass} onClick={(e) => e.stopPropagation()}>
           <button
             aria-label="Cerrar ventana emergente"
             className="popup__close"

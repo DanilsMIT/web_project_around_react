@@ -1,4 +1,4 @@
-export default function PopUpImage(propiedades) {
+export default function ImagePopup(propiedades) {
   const { CardData } = propiedades;
 
   return (

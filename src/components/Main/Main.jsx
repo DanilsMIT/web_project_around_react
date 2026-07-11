@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 ///Componentes
-import PopUp from "./PopUp/PopUp.jsx";
+import PopUp from "../PopUp/Popup.jsx";
 //Forms
-import NewCardForm from "./PopUp/Forms/NewCard.jsx";
-import EditProfileForm from "./PopUp/Forms/EditProfile.jsx";
-import ChangeAvatar from "./PopUp/Forms/ChangeAvatar.jsx";
+import NewCardForm from "../PopUp/NewCard/NewCard.jsx";
+import EditProfileForm from "../PopUp/EditProfile/EditProfile.jsx";
+import ChangeAvatar from "../PopUp/Avatar/EditAvatar.jsx";
 //Objetos
-import Card from "./Components/Card.jsx";
+import Card from "../Card/Card.jsx";
 //images
 import Avatar from "../../images/avatar.jpg";
 
