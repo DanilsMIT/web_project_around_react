@@ -1,5 +1,5 @@
-import PopUpImage from "../Popup/ImagePopup/ImagePopup.jsx";
-import DeleteConfirmation from "../Popup/RemoveCard/RemoveCard.jsx";
+import PopUpImage from "../popup/ImagePopup/ImagePopup.jsx";
+import DeleteConfirmation from "../popup/RemoveCard/RemoveCard.jsx";
 import placeholder from "../../images/placeholder.jpg";
 
 export default function Card({
