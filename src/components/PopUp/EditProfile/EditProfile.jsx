@@ -5,17 +5,24 @@ export default function EditProfileForm() {
   //Usando contexto
   const { currentUser: User, handleUpdateUser } =
     useContext(CurrentUserContext);
-
+  //inputs
   const [name, setName] = useState(User.name);
   const [about, setAbout] = useState(User.about);
+  //span errors
+  const [nameError, setNameError] = useState("");
+  const [aboutError, setAboutError] = useState("");
 
   //funciones
   const handleNameChange = (e) => {
     setName(e.target.value);
+    setNameError(e.target.validationMessage);
   };
   const handleAboutChange = (e) => {
     setAbout(e.target.value);
+    setAboutError(e.target.validationMessage);
   };
+
+  //submit
   const handleSubmit = (e) => {
     e.preventDefault();
     handleUpdateUser({ name, about });
@@ -40,7 +47,9 @@ export default function EditProfileForm() {
         onChange={handleNameChange}
         required
       />
-      <span className="profileName-input-error popup__input-error"></span>
+      <span className="popup__input-error_active popup__input-error">
+        {nameError}
+      </span>
 
       <input
         className="popup__input popup__input_type_description"
@@ -54,7 +63,9 @@ export default function EditProfileForm() {
         onChange={handleAboutChange}
         required
       />
-      <span className="profileAbout-input-error popup__input-error"></span>
+      <span className="popup__input-error_active popup__input-error">
+        {aboutError}
+      </span>
 
       <button className="button popup__button" type="submit">
         Guardar

@@ -27,7 +27,6 @@ export default function EditAvatar() {
         ref={avatarInput}
         type="url"
       />
-      <span className="avatarLink-input-error popup__input-error"></span>
 
       <button className="button popup__button" type="submit">
         Cambiar Imagen

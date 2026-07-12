@@ -26,7 +26,6 @@ export default function NewCardForm(propiedades) {
         ref={nameInput}
         required
       />
-      <span className="cardName-input-error popup__input-error"></span>
 
       <input
         className="popup__input popup__input_type_url"
@@ -37,7 +36,6 @@ export default function NewCardForm(propiedades) {
         ref={linkInput}
         required
       />
-      <span className="cardLink-input-error popup__input-error"></span>
 
       <button className="button popup__button" type="submit">
         Crear
