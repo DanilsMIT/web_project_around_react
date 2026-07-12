@@ -1,6 +1,20 @@
-export default function NewCardForm() {
+import { useRef } from "react";
+
+export default function NewCardForm(propiedades) {
+  const { handlePostCard } = propiedades;
+  const nameInput = useRef();
+  const linkInput = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handlePostCard({
+      name: nameInput.current.value,
+      link: linkInput.current.value,
+    });
+  };
+
   return (
-    <form className="popup__form" id="new-card-form">
+    <form className="popup__form" id="new-card-form" onSubmit={handleSubmit}>
       <input
         className="popup__input popup__input_type_card-name"
         name="cardName"
@@ -8,8 +22,9 @@ export default function NewCardForm() {
         placeholder="Título"
         minLength="2"
         maxLength="30"
-        required
         type="text"
+        ref={nameInput}
+        required
       />
       <span className="cardName-input-error popup__input-error"></span>
 
@@ -18,8 +33,9 @@ export default function NewCardForm() {
         name="cardLink"
         id="cardLink"
         placeholder="Enlace de la imagen"
-        required
         type="url"
+        ref={linkInput}
+        required
       />
       <span className="cardLink-input-error popup__input-error"></span>
 

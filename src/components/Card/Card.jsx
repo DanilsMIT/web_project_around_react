@@ -1,5 +1,6 @@
 import PopUpImage from "../PopUp/ImagePopup/ImagePopup.jsx";
 import DeleteConfirmation from "../PopUp/RemoveCard/RemoveCard.jsx";
+import placeholder from "../../images/placeholder.jpg";
 
 export default function Card({
   CardData,
@@ -36,7 +37,7 @@ export default function Card({
     <li className="card">
       <img
         className="card__image"
-        src={link}
+        src={link || placeholder}
         alt={name}
         onClick={() => handleOpenPopUp(ImagePopUp)}
       />
