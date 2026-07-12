@@ -1,58 +1,84 @@
-import { useState } from "react";
-
+import { useEffect, useState, useContext } from "react";
 ///Componentes
 import PopUp from "../PopUp/Popup.jsx";
+import ScreenLoader from "../ScreenLoader/ScreenLoader.jsx";
+import API from "../../utils/api.js";
 //Forms
 import NewCardForm from "../PopUp/NewCard/NewCard.jsx";
 import EditProfileForm from "../PopUp/EditProfile/EditProfile.jsx";
 import ChangeAvatar from "../PopUp/Avatar/EditAvatar.jsx";
 //Objetos
 import Card from "../Card/Card.jsx";
-//images
-import Avatar from "../../images/avatar.jpg";
-
-//constantes
-const cards = [
-  {
-    isLiked: false,
-    _id: "5d1f0611d321eb4bdcd707dd",
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
-    owner: "5d1f0611d321eb4bdcd707dd",
-    createdAt: "2019-07-05T08:10:57.741Z",
-  },
-  {
-    isLiked: false,
-    _id: "5d1f064ed321eb4bdcd707de",
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
-    owner: "5d1f0611d321eb4bdcd707dd",
-    createdAt: "2019-07-05T08:11:58.324Z",
-  },
-];
+//Contexto
+import { CurrentUserContext } from "../../context/CurrentUserContext.js";
 
 export default function Main() {
   //Atributos
   const [popup, setPopup] = useState(null);
-  ///componentes
-  //forms
-  const NewCardFormPopUp = { title: "Nuevo Lugar", children: <NewCardForm /> };
-  const EditProfileFormPopUp = {
-    title: "Editar Perfil",
-    children: <EditProfileForm />,
-  };
-  const ChangeAvatarFormPopUp = {
-    title: "Cambiar Avatar",
-    children: <ChangeAvatar />,
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const [cards, setCards] = useState([]);
+
+  //Hooks
+  useEffect(() => {
+    setIsLoading(true);
+    API.getCards()
+      .then((datos) => {
+        setCards(datos);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
+  }, []);
+
   //funciones
-  function handleOpenPopUp(popup) {
+  const handleOpenPopUp = (popup) => {
     setPopup(popup);
+  };
+
+  const handleClosePopUp = () => {
+    setPopup(null);
+  };
+
+  async function handleCardLike(card) {
+    //Revisa si hay like o no
+    const isLiked = card.isLiked;
+
+    try {
+      //La clase usa la API y esta devuelve la nueva carta actualizada
+      const UpdatedCard = await API.cardToggleLike(card._id, !isLiked);
+
+      //Devuelvo un nuevo arreglo, reemplazando una carta
+      setCards((cards) =>
+        cards.map((currentCard) =>
+          currentCard._id === UpdatedCard._id ? UpdatedCard : currentCard,
+        ),
+      );
+    } catch (error) {
+      console.error("Error al cambiar el like:", error);
+    }
   }
 
-  function handleClosePopUp() {
-    setPopup(null);
+  async function handleCardDelete(card) {
+    try {
+      //borro la carta de la API
+      await API.cardDelete(card._id);
+      //Devuelvo un arreglo, tirando una carta
+      setCards((cards) =>
+        cards.filter((currentCard) => currentCard._id != card._id),
+      );
+    } catch (error) {
+      console.error("Error al cambiar eliminar :", error);
+    }
   }
+  ///componentes
+  //forms
+  const FormPopup = {
+    EditProfile: { title: "Editar Perfil", children: <EditProfileForm /> },
+    ChangeAvatar: { title: "Cambiar Avatar", children: <ChangeAvatar /> },
+    NewCard: { title: "Nuevo Lugar", children: <NewCardForm /> },
+  };
+
+  //Usando Contexto
+  const User = useContext(CurrentUserContext);
   //retorna
   return (
     <main className="content">
@@ -60,25 +86,25 @@ export default function Main() {
         <div
           className="profile__image-container"
           id="editprofileAvatar"
-          onClick={() => handleOpenPopUp(ChangeAvatarFormPopUp)}
+          onClick={() => handleOpenPopUp(FormPopup.ChangeAvatar)}
         >
-          <img className="profile__image" src={Avatar} alt="Avatar" />
+          <img className="profile__image" src={User.avatar} alt="Avatar" />
         </div>
         <div className="profile__info">
-          <h1 className="profile__title">Danilo Isaac</h1>
+          <h1 className="profile__title">{User.name}</h1>
           <button
             aria-label="Editar perfil"
             className="profile__edit-button"
             type="button"
-            onClick={() => handleOpenPopUp(EditProfileFormPopUp)}
+            onClick={() => handleOpenPopUp(FormPopup.EditProfile)}
           ></button>
-          <p className="profile__description">Aventurero</p>
+          <p className="profile__description">{User.about}</p>
         </div>
         <button
           aria-label="Agregar tarjeta"
           className="profile__add-button"
           type="button"
-          onClick={() => handleOpenPopUp(NewCardFormPopUp)}
+          onClick={() => handleOpenPopUp(FormPopup.NewCard)}
         ></button>
       </section>
       <section className="cards page__section">
@@ -88,10 +114,13 @@ export default function Main() {
               key={card._id}
               CardData={card}
               handleOpenPopUp={handleOpenPopUp}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
             />
           ))}
         </ul>
       </section>
+      {isLoading && <ScreenLoader />}
       {popup && (
         <PopUp title={popup.title} onClose={() => handleClosePopUp()}>
           {popup.children}

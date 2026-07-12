@@ -1,6 +1,9 @@
 import logo from "../../images/logo.svg";
 
 export default function Header() {
+  function hola() {
+    console.log("soy el header");
+  }
   return (
     <header className="header page__section">
       <img

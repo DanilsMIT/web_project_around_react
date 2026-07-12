@@ -1,9 +1,27 @@
 import PopUpImage from "../PopUp/ImagePopup/ImagePopup.jsx";
 import DeleteConfirmation from "../PopUp/RemoveCard/RemoveCard.jsx";
 
-export default function Card({ CardData, handleOpenPopUp }) {
+export default function Card({
+  CardData,
+  handleOpenPopUp,
+  onCardLike,
+  onCardDelete,
+}) {
   //Atributos
   const { name, link, isLiked } = CardData;
+  //editor de className
+  const isLikedClass = `card__like-button ${
+    isLiked ? "card__like-button_is-active" : ""
+  }`;
+
+  //funciones por el bot
+  const handleLikeClick = () => {
+    onCardLike(CardData);
+  };
+
+  const handleDeleteClick = () => {
+    onCardDelete(CardData);
+  };
   //componente
   const ImagePopUp = {
     title: "",
@@ -26,14 +44,15 @@ export default function Card({ CardData, handleOpenPopUp }) {
         aria-label="Eliminar tarjeta"
         className="card__delete-button"
         type="button"
-        onClick={() => handleOpenPopUp(DeletePopUpConfirmation)}
+        onClick={handleDeleteClick}
       ></button>
       <div className="card__description">
         <h2 className="card__title">{name}</h2>
         <button
           aria-label="Botón Me gusta"
-          className="card__like-button"
+          className={isLikedClass}
           type="button"
+          onClick={handleLikeClick}
         ></button>
       </div>
     </li>
