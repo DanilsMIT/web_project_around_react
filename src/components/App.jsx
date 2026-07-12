@@ -7,7 +7,7 @@ import API from "../utils/api.js";
 import Main from "./Main/Main.jsx";
 import Footer from "./Footer/Footer.jsx";
 //contexto
-import { CurrentUserContext } from "../context/CurrentUserContext.js";
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [popup, setPopup] = useState(null);

@@ -6,11 +6,11 @@ import API from "../../utils/api.js";
 //Forms
 import NewCardForm from "../PopUp/NewCard/NewCard.jsx";
 import EditProfileForm from "../PopUp/EditProfile/EditProfile.jsx";
-import ChangeAvatar from "../PopUp/Avatar/EditAvatar.jsx";
+import EditAvatar from "../PopUp/EditAvatar/EditAvatar.jsx";
 //Objetos
 import Card from "../Card/Card.jsx";
 //Contexto
-import { CurrentUserContext } from "../../context/CurrentUserContext.js";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
 export default function Main(propiedades) {
   //Atributos
@@ -28,7 +28,7 @@ export default function Main(propiedades) {
   //botones a los forms
   const FormPopup = {
     EditProfile: { title: "Editar Perfil", children: <EditProfileForm /> },
-    ChangeAvatar: { title: "Cambiar Avatar", children: <ChangeAvatar /> },
+    EditAvatar: { title: "Cambiar Avatar", children: <EditAvatar /> },
     NewCard: {
       title: "Nuevo Lugar",
       children: <NewCardForm handlePostCard={handlePostCard} />,
@@ -44,7 +44,7 @@ export default function Main(propiedades) {
         <div
           className="profile__image-container"
           id="editprofileAvatar"
-          onClick={() => handleOpenPopUp(FormPopup.ChangeAvatar)}
+          onClick={() => handleOpenPopUp(FormPopup.EditAvatar)}
         >
           <img className="profile__image" src={User.avatar} alt="Avatar" />
         </div>
