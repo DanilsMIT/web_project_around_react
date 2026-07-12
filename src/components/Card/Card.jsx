@@ -1,4 +1,4 @@
-import PopUpImage from "../Popup/ImagePopup/ImagePopup.js";
+import PopUpImage from "../Popup/ImagePopup/ImagePopup.jsx";
 import DeleteConfirmation from "../Popup/RemoveCard/RemoveCard.jsx";
 import placeholder from "../../images/placeholder.jpg";
 
