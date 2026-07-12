@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export default function PopUp(propiedades) {
+function Popup(propiedades) {
   //atributos
   const { onClose, title, children } = propiedades;
   let popupContentClass = "popup__content";
@@ -40,3 +40,5 @@ export default function PopUp(propiedades) {
     </>
   );
 }
+
+export default Popup;

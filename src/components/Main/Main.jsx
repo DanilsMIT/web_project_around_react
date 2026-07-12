@@ -1,6 +1,6 @@
 import { useContext } from "react";
 ///Componentes
-import PopUp from "../Popup/Popup";
+import Popup from "../Popup/Popup";
 import ScreenLoader from "../ScreenLoader/ScreenLoader.jsx";
 import API from "../../utils/api.js";
 //Forms
@@ -79,9 +79,9 @@ export default function Main(propiedades) {
         </ul>
       </section>
       {popup && (
-        <PopUp title={popup.title} onClose={() => handleClosePopUp()}>
+        <Popup title={popup.title} onClose={() => handleClosePopUp()}>
           {popup.children}
-        </PopUp>
+        </Popup>
       )}
     </main>
   );
