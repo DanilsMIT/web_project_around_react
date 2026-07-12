@@ -27,8 +27,8 @@ class aroundUSAPI {
         method: "PATCH",
         headers: this._headers,
         body: JSON.stringify({
-          name: data.profileName,
-          about: data.profileAbout,
+          name: data.name,
+          about: data.about,
         }),
       });
       return this._checkResponse(response);
@@ -43,7 +43,7 @@ class aroundUSAPI {
         method: "PATCH",
         headers: this._headers,
         body: JSON.stringify({
-          avatar: data.avatarLink,
+          avatar: data.avatar,
         }),
       });
       return this._checkResponse(response);
@@ -65,8 +65,8 @@ class aroundUSAPI {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-        name: data.cardName,
-        link: data.cardLink,
+        name: data.name,
+        link: data.link,
       }),
     });
     return this._checkResponse(response);

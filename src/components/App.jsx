@@ -9,10 +9,21 @@ import Footer from "./Footer/Footer.jsx";
 //contexto
 import { CurrentUserContext } from "../context/CurrentUserContext.js";
 function App() {
+  const [popup, setPopup] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
-  //GET cards
+  //funciones
+  //popup
+  const handleOpenPopUp = (popup) => {
+    setPopup(popup);
+  };
+
+  const handleClosePopUp = () => {
+    setPopup(null);
+  };
+  //Hooks
+  //GET UserInfo
   useEffect(() => {
     setIsLoading(true);
     API.getUserInfo()
@@ -20,13 +31,28 @@ function App() {
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
   }, []);
+  //UPDATE UserInfo
+  const handleUpdateUser = (data) => {
+    (async () => {
+      await API.updateUserInfo(data)
+        .then((newData) => {
+          setCurrentUser(newData);
+          handleClosePopUp();
+        })
+        .catch((error) => console.error(error));
+    })();
+  };
 
   return (
     <>
       <div className="page__content">
-        <CurrentUserContext.Provider value={currentUser}>
+        <CurrentUserContext.Provider value={{ currentUser, handleUpdateUser }}>
           <Header />
-          <Main />
+          <Main
+            handleOpenPopUp={handleOpenPopUp}
+            handleClosePopUp={handleClosePopUp}
+            popup={popup}
+          />
           <Footer />
         </CurrentUserContext.Provider>
       </div>

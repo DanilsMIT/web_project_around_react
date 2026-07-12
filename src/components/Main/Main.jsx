@@ -12,13 +12,14 @@ import Card from "../Card/Card.jsx";
 //Contexto
 import { CurrentUserContext } from "../../context/CurrentUserContext.js";
 
-export default function Main() {
+export default function Main(propiedades) {
   //Atributos
-  const [popup, setPopup] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [cards, setCards] = useState([]);
+  const { handleOpenPopUp, handleClosePopUp, popup } = propiedades;
 
   //Hooks
+  //get cards
   useEffect(() => {
     setIsLoading(true);
     API.getCards()
@@ -29,15 +30,7 @@ export default function Main() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  //funciones
-  const handleOpenPopUp = (popup) => {
-    setPopup(popup);
-  };
-
-  const handleClosePopUp = () => {
-    setPopup(null);
-  };
-
+  //Update Like
   async function handleCardLike(card) {
     //Revisa si hay like o no
     const isLiked = card.isLiked;
@@ -56,7 +49,7 @@ export default function Main() {
       console.error("Error al cambiar el like:", error);
     }
   }
-
+  //Delete card
   async function handleCardDelete(card) {
     try {
       //borro la carta de la API
@@ -70,7 +63,7 @@ export default function Main() {
     }
   }
   ///componentes
-  //forms
+  //botones a los forms
   const FormPopup = {
     EditProfile: { title: "Editar Perfil", children: <EditProfileForm /> },
     ChangeAvatar: { title: "Cambiar Avatar", children: <ChangeAvatar /> },
@@ -78,7 +71,7 @@ export default function Main() {
   };
 
   //Usando Contexto
-  const User = useContext(CurrentUserContext);
+  const { currentUser: User } = useContext(CurrentUserContext);
   //retorna
   return (
     <main className="content">
