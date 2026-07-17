@@ -97,8 +97,9 @@ function App() {
       //borro la carta de la API
       await API.cardDelete(card._id);
       //Devuelvo un nuevo arreglo, tirando la vieja carta
-      setCards((cards) =>
-        cards.filter((currentCard) => currentCard._id != card._id),
+      setCards(
+        (cards) => cards.filter((currentCard) => currentCard._id != card._id),
+        handleClosePopUp(),
       );
     } catch (error) {
       console.error("Error al cambiar eliminar :", error);

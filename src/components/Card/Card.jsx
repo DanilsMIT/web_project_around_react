@@ -1,5 +1,5 @@
 import PopUpImage from "../popup/ImagePopup/ImagePopup.jsx";
-import DeleteConfirmation from "../popup/RemoveCard/RemoveCard.jsx";
+import RemoveCard from "../popup/RemoveCard/RemoveCard.jsx";
 import placeholder from "../../images/placeholder.jpg";
 
 export default function Card({
@@ -28,9 +28,11 @@ export default function Card({
     title: "",
     children: <PopUpImage CardData={CardData} />,
   };
-  const DeletePopUpConfirmation = {
+  const RemoveCardPopup = {
     title: "¿Borrar elemento?",
-    children: <DeleteConfirmation />,
+    children: (
+      <RemoveCard CardData={CardData} handleDeleteClick={handleDeleteClick} />
+    ),
   };
 
   return (
@@ -45,7 +47,7 @@ export default function Card({
         aria-label="Eliminar tarjeta"
         className="card__delete-button"
         type="button"
-        onClick={handleDeleteClick}
+        onClick={() => handleOpenPopUp(RemoveCardPopup)}
       ></button>
       <div className="card__description">
         <h2 className="card__title">{name}</h2>

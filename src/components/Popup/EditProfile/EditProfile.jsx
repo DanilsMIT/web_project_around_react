@@ -2,29 +2,39 @@ import { useContext, useState } from "react";
 import { CurrentUserContext } from "../../../contexts/CurrentUserContext";
 
 export default function EditProfileForm() {
-  //Usando contexto
+  // Usando contexto
   const { currentUser: User, handleUpdateUser } =
     useContext(CurrentUserContext);
-  //inputs
+
+  // inputs
   const [name, setName] = useState(User.name);
   const [about, setAbout] = useState(User.about);
-  //span errors
+
+  // span errors inicializados como strings vacíos
   const [nameError, setNameError] = useState("");
   const [aboutError, setAboutError] = useState("");
 
-  //funciones
+  //validador de boton
+  const invalidate =
+    nameError !== "" ||
+    aboutError !== "" ||
+    name.trim() == "" ||
+    about.trim() == "";
+
+  // funciones
   const handleNameChange = (e) => {
     setName(e.target.value);
     setNameError(e.target.validationMessage);
   };
+
   const handleAboutChange = (e) => {
     setAbout(e.target.value);
     setAboutError(e.target.validationMessage);
   };
 
-  //submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (invalidate) return;
     handleUpdateUser({ name, about });
   };
 
@@ -67,7 +77,11 @@ export default function EditProfileForm() {
         {aboutError}
       </span>
 
-      <button className="button popup__button" type="submit">
+      <button
+        className={`button popup__button ${invalidate ? "popup__button_disabled" : ""}`}
+        type="submit"
+        disabled={invalidate}
+      >
         Guardar
       </button>
     </form>

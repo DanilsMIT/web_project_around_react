@@ -32,6 +32,13 @@
   cursor: pointer;
 }
 
+.popup__button_disabled,
+.popup__button_disabled:hover {
+  background: rgba(0, 0, 0, 0.7) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  cursor: not-allowed !important;
+}
+
 .popup__close {
   width: 35px;
   height: 35px;

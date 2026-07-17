@@ -1,15 +1,36 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function NewCardForm(propiedades) {
   const { handlePostCard } = propiedades;
-  const nameInput = useRef();
-  const linkInput = useRef();
+  // inputs
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
+  //errors
+  const [nameError, setNameError] = useState("");
+  const [linkError, setLinkError] = useState("");
+  //invalidar boton
+  const invalidate = Boolean(
+    nameError != "" ||
+    (linkError != "") | (name.trim() == "") ||
+    link.trim() == "",
+  );
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+    setNameError(e.target.validationMessage);
+  };
+
+  const handleLinkChange = (e) => {
+    setLink(e.target.value);
+    setLinkError(e.target.validationMessage);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (invalidate) return;
     handlePostCard({
-      name: nameInput.current.value,
-      link: linkInput.current.value,
+      name: name,
+      link: link,
     });
   };
 
@@ -23,9 +44,13 @@ export default function NewCardForm(propiedades) {
         minLength="2"
         maxLength="30"
         type="text"
-        ref={nameInput}
+        value={name}
+        onChange={handleNameChange}
         required
       />
+      <span className="popup__input-error_active popup__input-error">
+        {nameError}
+      </span>
 
       <input
         className="popup__input popup__input_type_url"
@@ -33,11 +58,19 @@ export default function NewCardForm(propiedades) {
         id="cardLink"
         placeholder="Enlace de la imagen"
         type="url"
-        ref={linkInput}
+        value={link}
+        onChange={handleLinkChange}
         required
       />
+      <span className="popup__input-error_active popup__input-error">
+        {linkError}
+      </span>
 
-      <button className="button popup__button" type="submit">
+      <button
+        className={`button popup__button ${invalidate ? "popup__button_disabled" : ""}`}
+        type="submit"
+        disabled={invalidate}
+      >
         Crear
       </button>
     </form>
